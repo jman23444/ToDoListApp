@@ -1,5 +1,65 @@
+@import "reset.css";
+@import "taskCard.css";
+@import "sidebar.css";
+@import "taskModal.css";
+
+:root {
+
+    /* Colors */
+
+    --default-background: #FFFFFF;
+    --default-text: #373530;
+
+    --blue-background: #E9F3F7;
+    --blue-text: #487CA5;
+
+    --brown-background: #F3EEEE;
+    --brown-text: #976D57;
+
+    --gray-background: #F1F1EF;
+    --gray-text: #787774;
+
+    --green-background: #EEF3ED;
+    --green-text: #548164;
+
+    --orange-background: #F8ECDF;
+    --orange-text: #CC782F;
+
+    --pink-background: #F9F2F5;
+    --pink-text: #B35488;
+
+    --purple-background: #F6F3F8;
+    --purple-text: #8A67AB;
+
+    --red-background: #FAECEC;
+    --red-text: #C4554D;
+
+    --yellow-background: #FAF3DD;
+    --yellow-text: #C29343;
+
+    /* Text Styling */
+
+    --h1-sizing: 26px;
+    --h2-sizing: 20px;
+    --h3-sizing: 16px;
+    --pNormal-sizing: 16px;
+    --pSmall-sizing: 14px;
+
+    --h-bolding: 700;
+    --p-bolding: 400;
+
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+    position: relative;
+}
+
+#dashboard {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    width: calc(100% - 300px);
+    height: 100vh;
+    background-color: var(--default-background);
+}
+
