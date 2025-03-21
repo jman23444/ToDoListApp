@@ -1,7 +1,6 @@
 @import "reset.css";
-@import "taskCard.css";
-@import "sidebar.css";
-@import "taskModal.css";
+
+/* General Styling */
 
 :root {
 
@@ -54,6 +53,163 @@ body {
     position: relative;
 }
 
+h1 {
+    font-size: var(--h1-sizing);
+    font-weight: var(--h-bolding);
+}
+
+h2 {
+    font-size: var(--h2-sizing);
+    font-weight: var(--h-bolding);
+}
+
+p {
+    font-size: var(--pNormal-sizing);
+    font-weight: var(--p-bolding);
+}
+
+
+/* Modals */
+
+.modal {
+    display: none;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+    z-index: 11;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    overflow-y: auto; 
+}
+
+/* Modal Header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.close-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #787774;
+}
+
+/* Form Styles */
+#create-task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #F1F1EF;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+    color: #787774;
+}
+
+.form-group select {
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="%23787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.submit-btn {
+    background-color: #10B981;
+    border: none;
+    border-radius: 4px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #059669; /* Darker green on hover */
+}
+
+.submit-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #fff;
+}
+
+/* Dashboard Styling */
+
+.svg-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    background-color: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.svg-container svg {
+    width: 24px;
+    height: 24px;
+}
+
+.svg-container:hover {
+    background-color: var(--gray-background);
+}
+
 #dashboard {
     position: fixed;
     top: 0;
@@ -61,5 +217,224 @@ body {
     width: calc(100% - 300px);
     height: 100vh;
     background-color: var(--default-background);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: scroll;
 }
 
+/*  */
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#email-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    padding: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 16px;
+    background: var(--Purple-Text, #8A67AB);
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Dash - Header Prt 2 */
+
+.icon-holder {
+    display: flex; 
+    gap: 8px;
+}
+
+/* Main Dashboard Styling */
+
+.seperator {
+    height: 1px;
+    align-self: stretch;
+    background: var(--gray-background, #F1F1EF);
+}
+
+
+#tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-title-tags {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.title-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tags {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.task-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.due-date {
+    color: var(--gray-text);
+}
+
+.to-do {
+    color: var(--blue-text);
+    padding: 4px 8px;
+    background-color: var(--blue-background);
+    border-radius: 8px;
+}
+
+.in-progress {
+    color: var(--yellow-text);
+    padding: 4px 8px;
+    background-color: var(--yellow-background);
+    border-radius: 8px;
+}
+
+.completed {
+    color: var(--green-text);
+    padding: 4px 8px;
+    background-color: var(--green-background);
+    border-radius: 8px;
+}
+
+.archived {
+    color: var(--gray-text);
+    padding: 4px 8px;
+    background-color: var(--gray-background);
+    border-radius: 8px;
+}
+
+/* Sidebar Styling */
+
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 16px;
+    display: flex;
+    width: 300px;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-self: stretch;
+    border-right: 1px solid #D6D6D6;
+    background-color: var(--gray-background, #F1F1EF);
+    height: 100vh;
+}
+
+#sidebar svg {
+    width: 24px;
+    height: 24px;
+}
+
+#sidebar-X {
+    display:none;
+    z-index: 10;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    cursor: pointer;
+}
+        
+#side-bar-menu,
+#sidebar-footer {
+    width: 100%;
+    padding: 8px;
+}
+        
+.menu-item, .footer-item {
+    display: flex;
+    width: 100%;
+    padding: 4px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nested-menu-option {
+    display: flex;
+    width: 100%;
+    padding: 4px 4px 4px 16px;
+    justify-content: space-between;
+    align-items: center;
+}
+        
+.menu-item a,
+.nested-menu-option a,
+.footer-item a  {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: inherit;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.menu-item a:hover,
+.nested-menu-option a:hover,
+.footer-item a:hover {
+    background-color: #ddd;
+}
+        
+.nav-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+ul li:not(:first-child), .footer-item {
+    color: var(--gray-text);
+}
+  
+ul li:not(:first-child) svg {
+    color: var(--gray-text);
+}
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: flex-end; 
+}
+
+
+@media (max-width: 1152px) {
+
+    /* Sidebar */
+
+    #sidebar {
+        padding: 64px 8px 8px 8px;
+    }
+
+    #sidebar-X {
+        display: block;
+    }
+
+}
