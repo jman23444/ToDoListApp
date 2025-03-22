@@ -49,6 +49,7 @@
 
 }
 
+
 body {
     position: relative;
 }
@@ -71,6 +72,7 @@ p {
 
 /* Modals */
 
+
 .modal {
     display: none;
     position: absolute;
@@ -81,6 +83,7 @@ p {
     z-index: 11;
 }
 
+
 /* Modal Content */
 .modal-content {
     background-color: #fff;
@@ -90,10 +93,11 @@ p {
     padding: 16px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
-    top: 0%;
     left: 50%;
-    transform: translate(-50%, 0%);
-    overflow-y: auto; 
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    overflow-y: auto;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 /* Modal Header */
@@ -166,26 +170,72 @@ p {
     min-height: 80px;
 }
 
-.submit-btn {
-    background-color: #10B981;
-    border: none;
+/* Modal Buttons */
+
+.modal-btn {
+    width: 100%;
     border-radius: 4px;
     padding: 12px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
+}
+
+.submit-btn {
+    background-color: #10B981;
+    border: none;
+    stroke: #fff;
 }
 
 .submit-btn:hover {
-    background-color: #059669; /* Darker green on hover */
+    background-color: #059669; 
 }
 
-.submit-btn svg {
+.modal-btn svg {
     width: 24px;
     height: 24px;
-    stroke: #fff;
+}
+
+.modal-buttons-container {
+    display: flex;
+    gap: 8px;
+}
+
+#delete-task-button {
+    border: 1px solid var(--red-text);
+    background-color: var(--red-background);
+}
+
+#delete-task-button:hover {
+    background-color: var(--red-text);
+    color: #fff;
+}
+
+#delete-task-button:hover svg {
+    color: #fff;
+}
+
+#delete-task-button svg {
+    color: var(--red-text);
+}
+
+#keep-task-button {
+    border: 1px solid var(--gray-text);
+    background-color: var(--gray-background);
+}
+
+#keep-task-button:hover {
+    background-color: var(--gray-text);
+}
+
+#keep-task-button:hover svg {
+    color: #fff;
+}
+
+#keep-task-button svg {
+    color: var(--gray-text);
 }
 
 /* Dashboard Styling */
@@ -230,6 +280,17 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.dashboard-header svg {
+    width: 24px;
+    height: 24px;
+}
+
+svg#mobile-menu {
+    display: none;
+    color: var(--default-text);
+    cursor: pointer;
 }
 
 #email-icon {
@@ -361,7 +422,7 @@ p {
     cursor: pointer;
 }
         
-#side-bar-menu,
+#sidebar-menu, 
 #sidebar-footer {
     width: 100%;
     padding: 8px;
@@ -427,10 +488,22 @@ ul li:not(:first-child) svg {
 
 @media (max-width: 1152px) {
 
+    /* Dashboard */
+    #dashboard {
+        left: 0;
+        width: 100%;
+    }
+
+    svg#mobile-menu {
+        display: block;
+    }
+
     /* Sidebar */
 
     #sidebar {
+        display: none;
         padding: 64px 8px 8px 8px;
+        z-index: 100
     }
 
     #sidebar-X {

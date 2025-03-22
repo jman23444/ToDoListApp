@@ -6,12 +6,10 @@
   <title>To-Do List</title>
 </head>
 <body>
-    <!-- <div id="app"></div> -->
-    <!-- Overlay -->
-    <div id="overlay"></div>
-    <!-- Create Modal -->
-    <div id="create-task-modal" class="modal">
-        <div class="modal-content">
+    <div id="app"></div>
+<!--  
+    <div class="modal">
+        <div class="modal-content" id="create-task-modal">
             <div class="modal-header">
                 <h2>Create Task</h2>
                 <button class="close-btn" onclick="closeModal()">
@@ -43,7 +41,7 @@
                     <label for="task-description">Task Description</label>
                     <textarea id="task-description" name="task-description" placeholder="Enter Description" rows="4"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">
+                <button type="submit" class="modal-btn submit-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"/>
                     </svg>
@@ -51,9 +49,34 @@
             </form>
         </div>
     </div>
-
+    <div class="modal">
+        <div class="modal-content" id="delete-task-modal">
+            <div class="modal-header">
+                <h2>Delete Task</h2>
+                <button class="close-btn" onclick="closeModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-buttons-container">
+                <button class="modal-btn" id="delete-task-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </button>
+                <button class="modal-btn" id="keep-task-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M24 8L8 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8 8L24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
     </div>
-     <!-- Nav -->
+    </div>
+
      <nav id="sidebar">
         <svg id="sidebar-X" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
             <path d="M24 8L8 24" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -169,11 +192,16 @@
             </div>
         </ul>
     </nav>
-    <!-- Main Dash -->
+  
     <div id="dashboard">
-        <!-- Dash - Header Prt#1  -->
+         Dash - Header Prt#1 
         <div class="dashboard-header">
             <div class="nav-title-group">
+                <svg id="mobile-menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu">
+                    <line x1="4" x2="20" y1="12" y2="12"/>
+                    <line x1="4" x2="20" y1="6" y2="6"/>
+                    <line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
                 <svg id="task-svg" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
                     <path d="M20.0001 2.66663H12.0001C11.2637 2.66663 10.6667 3.26358 10.6667 3.99996V6.66663C10.6667 7.40301 11.2637 7.99996 12.0001 7.99996H20.0001C20.7365 7.99996 21.3334 7.40301 21.3334 6.66663V3.99996C21.3334 3.26358 20.7365 2.66663 20.0001 2.66663Z" stroke="#373530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M21.3333 5.33337H23.9999C24.7072 5.33337 25.3854 5.61433 25.8855 6.11442C26.3856 6.61452 26.6666 7.2928 26.6666 8.00004V26.6667C26.6666 27.374 26.3856 28.0522 25.8855 28.5523C25.3854 29.0524 24.7072 29.3334 23.9999 29.3334H7.99992C7.29267 29.3334 6.6144 29.0524 6.1143 28.5523C5.6142 28.0522 5.33325 27.374 5.33325 26.6667V8.00004C5.33325 7.2928 5.6142 6.61452 6.1143 6.11442C6.6144 5.61433 7.29267 5.33337 7.99992 5.33337H10.6666" stroke="#373530" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -205,7 +233,7 @@
                 </div>
             </div>
         </div>
-        <!-- Dash - Header Prt#2 -->
+         Dash - Header Prt#2 
         <div class="dashboard-header">
             <h1>Brad's To-Do List</h1>
             <div class="icon-holder">
@@ -225,7 +253,7 @@
             </div>
         </div>
         <div class="seperator"></div>
-        <!-- Dash - Tasks -->
+         Dash - Tasks
         <div id="tasks">
             <div class="task to-do-task">
                 <div class="task-title-tags">
@@ -420,6 +448,6 @@
             </div>
             <div class="seperator"></div>
         </div>
-    </div>
+    </div> -->
 </body>
 </html>
