@@ -25,9 +25,12 @@ const dashboard = {
       <line x1="4" x2="20" y1="6" y2="6"/>
       <line x1="4" x2="20" y1="18" y2="18"/>
     `;
+    //
     mobileMenuSvg.addEventListener('click', () => {
       document.getElementById('sidebar').style.display = 'block';
+      document.getElementById('mobile-menu-overlay').style.display = 'block';
     });
+    //
     const taskSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     taskSvg.id = 'task-svg';
     taskSvg.setAttribute('width', '32');

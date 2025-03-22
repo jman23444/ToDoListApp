@@ -260,6 +260,7 @@ p {
     background-color: var(--gray-background);
 }
 
+
 #dashboard {
     position: fixed;
     top: 0;
@@ -322,7 +323,6 @@ svg#mobile-menu {
     align-self: stretch;
     background: var(--gray-background, #F1F1EF);
 }
-
 
 #tasks {
     display: flex;
@@ -393,6 +393,7 @@ svg#mobile-menu {
 
 /* Sidebar Styling */
 
+
 #sidebar {
     position: fixed;
     top: 0;
@@ -406,7 +407,9 @@ svg#mobile-menu {
     border-right: 1px solid #D6D6D6;
     background-color: var(--gray-background, #F1F1EF);
     height: 100vh;
+    z-index: 9;
 }
+
 
 #sidebar svg {
     width: 24px;
@@ -418,7 +421,7 @@ svg#mobile-menu {
     z-index: 10;
     position: absolute;
     top: 16px;
-    left: 16px;
+    right: 16px;
     cursor: pointer;
 }
         
@@ -488,6 +491,16 @@ ul li:not(:first-child) svg {
 
 @media (max-width: 1152px) {
 
+    /* Mobile menu Overlay */
+    #mobile-menu-overlay {
+        width: 100vw;
+        height: 100vh;
+        z-index: 8;
+        position: fixed;
+        background-color: rgb(0, 0, 0, 0.2);
+        display: none;
+    }
+
     /* Dashboard */
     #dashboard {
         left: 0;
@@ -501,7 +514,6 @@ ul li:not(:first-child) svg {
     /* Sidebar */
 
     #sidebar {
-        display: none;
         padding: 64px 8px 8px 8px;
         z-index: 100
     }

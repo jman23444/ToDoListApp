@@ -6,6 +6,18 @@ const dom = {
     renderApp(projects, onProjectClick, onCreateTask, onEditTask, onDeleteTask) {
       const app = document.getElementById('app');
       app.innerHTML = ''; // Clear the app container
+
+      // Attach Mobile Menu Overlay
+      const mobileMenuOverlay = document.createElement('div');
+      mobileMenuOverlay.id = 'mobile-menu-overlay';
+      app.appendChild(mobileMenuOverlay);
+
+      // 
+      mobileMenuOverlay.addEventListener('click', () => {
+        mobileMenuOverlay.style.display = 'none';
+        document.getElementById('sidebar').style.display = 'none';
+      });
+
   
       // Render Sidebar
       const sidebarElement = sidebar.renderSidebar(projects, onProjectClick);

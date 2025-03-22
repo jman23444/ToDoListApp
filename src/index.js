@@ -52,5 +52,26 @@ dom.renderApp(appController.projects, render,
 // Render the "To Do" project by default
 render(0);
 
+
+//  Ensuring Sidebar Visibility is correct 
+
+const sidebar = document.getElementById('sidebar');
+let isSidebarOpen = false;
+
+const correctSidebarVisibility = () => {
+    //
+    const viewportWidth = window.innerWidth;
+    //
+    if (viewportWidth > 1152) {
+        sidebar.style.display = 'block';
+    } else if (viewportWidth < 1152) {
+        sidebar.style.display = 'none';
+    }
+}
+
+// 
+window.addEventListener('resize', correctSidebarVisibility);
+
+
 console.log("Hello, Webpack!");
 

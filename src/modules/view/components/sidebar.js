@@ -16,11 +16,13 @@ const sidebar = {
         <path d="M24 8L8 24" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M8 8L24 24" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         `;
+        //
         sidebarX.addEventListener('click', () => {
-        sidebar.style.display = 'none';
+            sidebar.style.display = 'none';
+            document.getElementById('mobile-menu-overlay').style.display = 'none';
         });
+        //
         sidebar.appendChild(sidebarX);
-
         // Sidebar menu
         const sidebarMenu = document.createElement('ul');
         sidebarMenu.id = 'sidebar-menu';
