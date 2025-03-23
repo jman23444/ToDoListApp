@@ -39,7 +39,7 @@ const taskModal = {
             <textarea id="task-description" name="task-description" placeholder="Enter Description" rows="4">${task ? task.description : ''}</textarea>
           </div>
           <button type="submit" class="modal-btn submit-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
           </button>
@@ -56,18 +56,30 @@ const taskModal = {
 
     const form = modal.querySelector('#create-task-form');
     const closeBtn = modal.querySelector('.close-btn');
+    const modalContent = modal.querySelector('.modal-content');
 
     const closeModal = () => {
       console.log('Before modal close: classList:', modal.classList.toString(), 'modal-content opacity:', window.getComputedStyle(modal.querySelector('.modal-content')).opacity, 'transform:', window.getComputedStyle(modal.querySelector('.modal-content')).transform);
-      // Force a reflow by toggling a dummy class
       modal.classList.add('reflow');
       modal.classList.remove('show');
       console.log('After removing show: classList:', modal.classList.toString());
       setTimeout(() => {
         modal.remove();
         console.log('Modal closed and removed');
-      }, 200); // Match transition duration (0.3s)
+      }, 300);
     };
+
+    // Close modal when clicking the background (but not the modal content)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) { // Only close if the click is on the backdrop, not the modal content
+        closeModal();
+      }
+    });
+
+    // Prevent clicks on the modal content from bubbling up to the backdrop
+    modalContent.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -127,18 +139,30 @@ const taskModal = {
     const deleteBtn = modal.querySelector('#delete-task-button');
     const keepBtn = modal.querySelector('#keep-task-button');
     const closeBtn = modal.querySelector('.close-btn');
+    const modalContent = modal.querySelector('.modal-content');
 
     const closeModal = () => {
       console.log('Before modal close: classList:', modal.classList.toString(), 'modal-content opacity:', window.getComputedStyle(modal.querySelector('.modal-content')).opacity, 'transform:', window.getComputedStyle(modal.querySelector('.modal-content')).transform);
-      // Force a reflow by toggling a dummy class
       modal.classList.add('reflow');
       modal.classList.remove('show');
       console.log('After removing show: classList:', modal.classList.toString());
       setTimeout(() => {
         modal.remove();
         console.log('Modal closed and removed');
-      }, 200); 
+      }, 300);
     };
+
+    // Close modal when clicking the background (but not the modal content)
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) { // Only close if the click is on the backdrop, not the modal content
+        closeModal();
+      }
+    });
+
+    // Prevent clicks on the modal content from bubbling up to the backdrop
+    modalContent.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
 
     deleteBtn.addEventListener('click', () => {
       onConfirm();
