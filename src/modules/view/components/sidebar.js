@@ -20,7 +20,7 @@ const sidebar = {
         sidebarX.addEventListener('click', () => {
             sidebar.style.display = 'none';
             document.getElementById('mobile-menu-overlay').style.display = 'none';
-            
+
         });
         //
         sidebar.appendChild(sidebarX);
@@ -129,33 +129,39 @@ const sidebar = {
 
         // Nested menu options (To Do, In Progress, Completed, Archived)
         const nestedOptions = [
-        { id: 'to-do-tasks-menu-option', text: 'To Do', svg: `
-            <path d="M15.9999 28C21.891 28 26.6666 23.2244 26.6666 17.3334C26.6666 11.4423 21.891 6.66669 15.9999 6.66669C10.1089 6.66669 5.33325 11.4423 5.33325 17.3334C5.33325 23.2244 10.1089 28 15.9999 28Z" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6.66675 4L2.66675 8" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M29.3333 8L25.3333 4" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8.50659 24.9333L5.33325 28" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M23.52 24.8933L26.6667 28" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 17.3334L14.6667 20L20 14.6667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        ` },
-        { id: 'in-progress-tasks-menu-option', text: 'In Progress', svg: `
-            <path d="M16 2.66669V8.00002" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M21.6001 10.4L25.4668 6.53333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M24 16H29.3333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M21.6001 21.6L25.4668 25.4666" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 24V29.3333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6.53345 25.4666L10.4001 21.6" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2.66675 16H8.00008" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6.53345 6.53333L10.4001 10.4" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        ` },
-        { id: 'completed-tasks-menu-option', text: 'Completed', svg: `
-            <path d="M5.33325 26V6.00002C5.33325 5.11597 5.68444 4.26812 6.30956 3.643C6.93468 3.01788 7.78253 2.66669 8.66659 2.66669H25.3333C25.6869 2.66669 26.026 2.80716 26.2761 3.05721C26.5261 3.30726 26.6666 3.6464 26.6666 4.00002V28C26.6666 28.3536 26.5261 28.6928 26.2761 28.9428C26.026 29.1929 25.6869 29.3334 25.3333 29.3334H8.66659C7.78253 29.3334 6.93468 28.9822 6.30956 28.357C5.68444 27.7319 5.33325 26.8841 5.33325 26ZM5.33325 26C5.33325 25.116 5.68444 24.2681 6.30956 23.643C6.93468 23.0179 7.78253 22.6667 8.66659 22.6667H26.6666" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 12.6667L14.6667 15.3333L20 10" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        ` },
-        { id: 'archived-tasks-menu-option', text: 'Archived', svg: `
-            <path d="M28.0001 4H4.00008C3.2637 4 2.66675 4.59695 2.66675 5.33333V9.33333C2.66675 10.0697 3.2637 10.6667 4.00008 10.6667H28.0001C28.7365 10.6667 29.3334 10.0697 29.3334 9.33333V5.33333C29.3334 4.59695 28.7365 4 28.0001 4Z" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M5.33325 10.6667V25.3334C5.33325 26.0406 5.6142 26.7189 6.1143 27.219C6.6144 27.7191 7.29267 28 7.99992 28H23.9999C24.7072 28 25.3854 27.7191 25.8855 27.219C26.3856 26.7189 26.6666 26.0406 26.6666 25.3334V10.6667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M13.3333 16H18.6666" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        ` },
+            { id: 'all-tasks-menu-option', text: 'All', svg: `
+                <path d="M4.6667 17.3333h8" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="m2.6667 21.3333 6-12 6 12" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24 9.3333v12" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="m18.6667 16 5.3333 5.3333 5.3333-5.3333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            ` },
+            { id: 'to-do-tasks-menu-option', text: 'To Do', svg: `
+                <path d="M15.9999 28C21.891 28 26.6666 23.2244 26.6666 17.3334C26.6666 11.4423 21.891 6.66669 15.9999 6.66669C10.1089 6.66669 5.33325 11.4423 5.33325 17.3334C5.33325 23.2244 10.1089 28 15.9999 28Z" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.66675 4L2.66675 8" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M29.3333 8L25.3333 4" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8.50659 24.9333L5.33325 28" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M23.52 24.8933L26.6667 28" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 17.3334L14.6667 20L20 14.6667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            ` },
+            { id: 'in-progress-tasks-menu-option', text: 'In Progress', svg: `
+                <path d="M16 2.66669V8.00002" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21.6001 10.4L25.4668 6.53333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M24 16H29.3333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M21.6001 21.6L25.4668 25.4666" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 24V29.3333" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.53345 25.4666L10.4001 21.6" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2.66675 16H8.00008" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6.53345 6.53333L10.4001 10.4" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            ` },
+            { id: 'completed-tasks-menu-option', text: 'Completed', svg: `
+                <path d="M5.33325 26V6.00002C5.33325 5.11597 5.68444 4.26812 6.30956 3.643C6.93468 3.01788 7.78253 2.66669 8.66659 2.66669H25.3333C25.6869 2.66669 26.026 2.80716 26.2761 3.05721C26.5261 3.30726 26.6666 3.6464 26.6666 4.00002V28C26.6666 28.3536 26.5261 28.6928 26.2761 28.9428C26.026 29.1929 25.6869 29.3334 25.3333 29.3334H8.66659C7.78253 29.3334 6.93468 28.9822 6.30956 28.357C5.68444 27.7319 5.33325 26.8841 5.33325 26ZM5.33325 26C5.33325 25.116 5.68444 24.2681 6.30956 23.643C6.93468 23.0179 7.78253 22.6667 8.66659 22.6667H26.6666" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 12.6667L14.6667 15.3333L20 10" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            ` },
+            { id: 'archived-tasks-menu-option', text: 'Archived', svg: `
+                <path d="M28.0001 4H4.00008C3.2637 4 2.66675 4.59695 2.66675 5.33333V9.33333C2.66675 10.0697 3.2637 10.6667 4.00008 10.6667H28.0001C28.7365 10.6667 29.3334 10.0697 29.3334 9.33333V5.33333C29.3334 4.59695 28.7365 4 28.0001 4Z" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.33325 10.6667V25.3334C5.33325 26.0406 5.6142 26.7189 6.1143 27.219C6.6144 27.7191 7.29267 28 7.99992 28H23.9999C24.7072 28 25.3854 27.7191 25.8855 27.219C26.3856 26.7189 26.6666 26.0406 26.6666 25.3334V10.6667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M13.3333 16H18.6666" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            ` },
         ];
 
         // Create a container for nested options to manage visibility

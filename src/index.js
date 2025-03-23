@@ -50,7 +50,6 @@ const setupSidebarEventListeners = () => {
     console.log('Mobile menu clicked, current isSidebarOpen:', isSidebarOpen);
     isSidebarOpen = !isSidebarOpen;
     isMobileToggled = isSidebarOpen; // Track that the user toggled in mobile view
-    console.log('New isSidebarOpen:', isSidebarOpen, 'isMobileToggled:', isMobileToggled, 'Triggered by: toggleSidebar');
     updateSidebarVisibility();
   }
 
@@ -59,7 +58,6 @@ const setupSidebarEventListeners = () => {
     console.log('Sidebar close button or overlay clicked, current isSidebarOpen:', isSidebarOpen);
     isSidebarOpen = false;
     isMobileToggled = false; // Reset mobile toggle state
-    console.log('New isSidebarOpen:', isSidebarOpen, 'isMobileToggled:', isMobileToggled, 'Triggered by: closeSidebar');
     updateSidebarVisibility();
   }
 
@@ -69,19 +67,15 @@ const setupSidebarEventListeners = () => {
     const wasMobileView = isMobileView;
     isMobileView = viewportWidth <= 1152;
 
-    console.log('Viewport width:', viewportWidth, 'isSidebarOpen:', isSidebarOpen, 'isMobileToggled:', isMobileToggled, 'isMobileView:', isMobileView, 'wasMobileView:', wasMobileView);
-
     if (viewportWidth > 1152) {
       // Transitioning from mobile view to laptop view
       if (wasMobileView && !isMobileView) {
-        console.log('Before transition: Sidebar classList:', sidebar.classList.toString(), 'transform:', window.getComputedStyle(sidebar).transform);
         // Ensure the sidebar starts from the hidden position if it was hidden in mobile view
         if (!isMobileToggled) {
           sidebar.classList.add('hidden'); // Start from hidden position
         }
         sidebar.style.display = 'flex';
         sidebar.classList.remove('hidden'); // Slide in from the left
-        console.log('Transitioned to laptop view, sliding in from the left');
       } else {
         // Already in laptop view, ensure sidebar is visible
         sidebar.classList.remove('hidden');
@@ -92,14 +86,12 @@ const setupSidebarEventListeners = () => {
       mobileMenuOverlay.style.display = 'none';
       mobileMenuOverlay.classList.remove('visible');
       isSidebarOpen = true;
-      console.log('Laptop view: Sidebar classList:', sidebar.classList.toString(), 'display:', sidebar.style.display, 'Triggered by: resize');
     } else {
       // Mobile view: Hide by default unless explicitly toggled
       if (!wasMobileView && isMobileView) {
         // Transitioning from laptop view to mobile view
         isSidebarOpen = false;
         isMobileToggled = false;
-        console.log('Transitioned to mobile view, resetting isSidebarOpen to false');
       }
 
       // In mobile view, only show if the user explicitly toggled it
@@ -112,11 +104,8 @@ const setupSidebarEventListeners = () => {
           sidebar.classList.remove('hidden');
           sidebar.classList.remove('collapse');
           mobileMenuOverlay.classList.add('visible');
-          console.log('Slide-in complete: Sidebar classList:', sidebar.classList.toString(), 'transform:', window.getComputedStyle(sidebar).transform);
         }, 10);
-        console.log('Mobile view (open): Sidebar classList:', sidebar.classList.toString(), 'display:', sidebar.style.display);
       } else {
-        console.log('Before slide-out: Sidebar classList:', sidebar.classList.toString(), 'transform:', window.getComputedStyle(sidebar).transform);
         sidebar.classList.add('hidden');
         sidebar.classList.remove('collapse');
         mobileMenuOverlay.classList.remove('visible');
@@ -125,7 +114,6 @@ const setupSidebarEventListeners = () => {
           mobileMenuOverlay.style.display = 'none';
           console.log('Slide-out complete: Sidebar classList:', sidebar.classList.toString(), 'transform:', window.getComputedStyle(sidebar).transform);
         }, 300);
-        console.log('Mobile view (closed): Sidebar classList:', sidebar.classList.toString(), 'display:', sidebar.style.display);
       }
     }
   }
