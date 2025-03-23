@@ -20,6 +20,7 @@ const sidebar = {
         sidebarX.addEventListener('click', () => {
             sidebar.style.display = 'none';
             document.getElementById('mobile-menu-overlay').style.display = 'none';
+            
         });
         //
         sidebar.appendChild(sidebarX);
