@@ -2,8 +2,12 @@ import { format } from 'date-fns';
 
 const dashboard = {
   renderDashboard(project, onCreateTask, onEditTask, onDeleteTask) {
+    console.log('Rendering dashboard');
     const dashboard = document.createElement('div');
     dashboard.id = 'dashboard';
+
+    // Maintain filter state
+    let currentFilter = 'All'; // Default filter: show all tasks
 
     // Dashboard Header Part 1
     const header1 = document.createElement('div');
@@ -120,8 +124,9 @@ const dashboard = {
     `;
     plusSvg.addEventListener('click', onCreateTask);
     plusContainer.appendChild(plusSvg);
+
     const listContainer = document.createElement('div');
-    listContainer.className = 'svg-container';
+    listContainer.className = 'svg-container filter-container';
     const listSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     listSvg.setAttribute('width', '32');
     listSvg.setAttribute('height', '32');
@@ -133,6 +138,49 @@ const dashboard = {
       <path d="M13.3335 24H18.6668" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     `;
     listContainer.appendChild(listSvg);
+
+    // Create the filter dropdown
+    const filterDropdown = document.createElement('div');
+    filterDropdown.className = 'filter-dropdown';
+    filterDropdown.style.display = 'none'; // Hidden by default
+
+    const filterOptions = ['All', 'To Do', 'In Progress', 'Completed', 'Archived'];
+    filterOptions.forEach(option => {
+      const filterItem = document.createElement('div');
+      filterItem.className = 'filter-item';
+      if (option === currentFilter) {
+        filterItem.classList.add('selected');
+      }
+      filterItem.textContent = option;
+      filterItem.addEventListener('click', () => {
+        currentFilter = option;
+        console.log('Filter changed to:', currentFilter);
+        filterDropdown.style.display = 'none'; // Hide dropdown after selection
+        // Update selected state
+        filterDropdown.querySelectorAll('.filter-item').forEach(item => item.classList.remove('selected'));
+        filterItem.classList.add('selected');
+        renderTasks(); // Re-render tasks with the new filter
+      });
+      filterDropdown.appendChild(filterItem);
+    });
+    listContainer.appendChild(filterDropdown);
+
+    // Toggle dropdown on click
+    listSvg.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isVisible = filterDropdown.style.display === 'block';
+      filterDropdown.style.display = isVisible ? 'none' : 'block';
+      console.log('Filter dropdown toggled:', filterDropdown.style.display);
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!listContainer.contains(e.target)) {
+        filterDropdown.style.display = 'none';
+        console.log('Filter dropdown closed (clicked outside)');
+      }
+    });
+
     iconHolder.appendChild(plusContainer);
     iconHolder.appendChild(listContainer);
     header2.appendChild(header2Title);
@@ -144,154 +192,166 @@ const dashboard = {
     separator1.className = 'seperator';
     dashboard.appendChild(separator1);
 
-    // Tasks
+    // Tasks Container
     const tasksContainer = document.createElement('div');
     tasksContainer.id = 'tasks';
-    console.log('Project tasks:', project.tasks);
-    if (project.tasks && Array.isArray(project.tasks)) {
-      project.tasks.forEach((task, index) => {
-        console.log(`Rendering task ${index}:`, task);
-        try {
-          const taskElement = this.renderTask(task, index, onEditTask, onDeleteTask);
-          tasksContainer.appendChild(taskElement);
-          const separator = document.createElement('div');
-          separator.className = 'seperator';
-          tasksContainer.appendChild(separator);
-        } catch (error) {
-          console.error(`Error rendering task ${index}:`, error, 'Task data:', task);
-        }
-      });
-    } else {
-      console.log('No tasks to render or project.tasks is not an array.');
-    }
     dashboard.appendChild(tasksContainer);
-    
+
+    // Function to render tasks based on the current filter
+    const renderTasks = () => {
+      tasksContainer.innerHTML = ''; // Clear existing tasks
+      console.log('Rendering tasks with filter:', currentFilter);
+      if (project.tasks && Array.isArray(project.tasks)) {
+        project.tasks.forEach((task, index) => {
+          console.log(`Processing task ${index}:`, task);
+          // Apply filter: show all tasks for "All" filter or match the task status
+          if (currentFilter === 'All' || task.status === currentFilter) {
+            try {
+              const taskElement = this.renderTask(task, index, onEditTask, onDeleteTask);
+              tasksContainer.appendChild(taskElement);
+              const separator = document.createElement('div');
+              separator.className = 'seperator';
+              tasksContainer.appendChild(separator);
+              console.log(`Task ${index} appended to tasksContainer`);
+            } catch (error) {
+              console.error(`Error rendering task ${index}:`, error, 'Task data:', task);
+            }
+          } else {
+            console.log(`Skipping task ${index}: status ${task.status} does not match filter ${currentFilter}`);
+          }
+        });
+      } else {
+        console.log('No tasks to render or project.tasks is not an array.');
+      }
+    };
+
+    // Initial render of tasks
+    renderTasks();
+
     return dashboard;
   },
 
   renderTask(task, index, onEditTask, onDeleteTask) {
     console.log('Rendering task:', task);
-    try {
-      // Validate task properties
-      if (!task.title || !task.status || !task.dueDate) {
-        throw new Error('Task is missing required properties (title, status, or dueDate)');
-      }
-
-      const taskElement = document.createElement('div');
-      taskElement.className = `task ${task.status.toLowerCase().replace(' ', '-')}-task`;
-      console.log('Created task element with class:', taskElement.className);
-
-      const taskTitleTags = document.createElement('div');
-      taskTitleTags.className = 'task-title-tags';
-      console.log('Created taskTitleTags element');
-
-      // Define status-to-color mapping
-      const statusColors = {
-        'To Do': { stroke: '#487CA5', fill: '#E9F3F7' },
-        'In Progress': { stroke: '#C29343', fill: '#FAF3DD' },
-        'Completed': { stroke: '#548164', fill: '#EEF3ED' },
-        'Archived': { stroke: '#787774', fill: '#F1F1EF' }
-      };
-
-      const statusColor = statusColors[task.status] || statusColors['To Do'];
-      console.log('Status color for task:', statusColor);
-
-      const taskSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      taskSvg.id = 'status-task';
-      taskSvg.setAttribute('width', '32');
-      taskSvg.setAttribute('height', '32');
-      taskSvg.setAttribute('viewBox', '0 0 32 32');
-      taskSvg.setAttribute('fill', 'none');
-      taskSvg.innerHTML = `
-        <path d="M16.0001 29.3333C23.3639 29.3333 29.3334 23.3638 29.3334 16C29.3334 8.63616 23.3639 2.66663 16.0001 2.66663C8.63628 2.66663 2.66675 8.63616 2.66675 16C2.66675 23.3638 8.63628 29.3333 16.0001 29.3333Z" fill="${statusColor.fill}" stroke="${statusColor.stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      `;
-      console.log('Created taskSvg element');
-
-      const titleTags = document.createElement('div');
-      titleTags.className = 'title-tags';
-      console.log('Created titleTags element');
-
-      const taskTitle = document.createElement('p');
-      taskTitle.className = 'task-title';
-      taskTitle.textContent = task.title;
-      console.log('Created taskTitle element with text:', task.title);
-
-      const tags = document.createElement('div');
-      tags.className = 'tags';
-      console.log('Created tags element');
-
-      const statusTag = document.createElement('div');
-      statusTag.className = `status-tag ${task.status.toLowerCase().replace(' ', '-')}`;
-      statusTag.textContent = task.status;
-      console.log('Created statusTag element with class:', statusTag.className, 'text:', task.status);
-
-      const dueDate = document.createElement('p');
-      dueDate.className = 'due-date';
-      console.log('Formatting dueDate:', task.dueDate);
-      dueDate.innerHTML = task.status === 'Completed' || task.status === 'Archived'
-        ? `${task.status === 'Completed' ? 'Completed On' : 'Archived'}: <span class="date">${format(new Date(task.dueDate), 'M/d/yyyy')}</span>`
-        : `Due Date: <span class="date">${format(new Date(task.dueDate), 'M/d/yyyy')}</span>`;
-      console.log('Created dueDate element with HTML:', dueDate.innerHTML);
-
-      tags.appendChild(statusTag);
-      tags.appendChild(dueDate);
-      titleTags.appendChild(taskTitle);
-      titleTags.appendChild(tags);
-      taskTitleTags.appendChild(taskSvg);
-      taskTitleTags.appendChild(titleTags);
-
-      const taskControls = document.createElement('div');
-      taskControls.className = 'task-controls';
-      console.log('Created taskControls element');
-
-      const editContainer = document.createElement('div');
-      editContainer.className = 'svg-container';
-      const editSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      editSvg.classList.add('edit-task');
-      editSvg.setAttribute('width', '32');
-      editSvg.setAttribute('height', '33');
-      editSvg.setAttribute('viewBox', '0 0 32 33');
-      editSvg.setAttribute('fill', 'none');
-      editSvg.innerHTML = `
-        <path d="M28.2322 9.58265C28.9372 8.87788 29.3333 7.92194 29.3334 6.92512C29.3335 5.9283 28.9377 4.97226 28.2329 4.26731C27.5281 3.56237 26.5722 3.16626 25.5754 3.16614C24.5786 3.16601 23.6225 3.56188 22.9176 4.26665L5.1229 22.0653C4.81333 22.374 4.58439 22.754 4.45624 23.172L2.6949 28.9746C2.66045 29.09 2.65784 29.2124 2.68737 29.3291C2.7169 29.4458 2.77747 29.5523 2.86263 29.6373C2.9478 29.7223 3.0544 29.7827 3.17112 29.8121C3.28783 29.8414 3.41032 29.8386 3.52557 29.804L9.32957 28.044C9.74713 27.917 10.1271 27.6894 10.4362 27.3813L28.2322 9.58265Z" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M20 7.16669L25.3333 12.5" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      `;
-      editSvg.addEventListener('click', () => onEditTask(index));
-      editContainer.appendChild(editSvg);
-      console.log('Created editContainer with editSvg');
-
-      const deleteContainer = document.createElement('div');
-      deleteContainer.className = 'svg-container';
-      const deleteSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      deleteSvg.id = 'delete-task';
-      deleteSvg.setAttribute('width', '32');
-      deleteSvg.setAttribute('height', '33');
-      deleteSvg.setAttribute('viewBox', '0 0 32 33');
-      deleteSvg.setAttribute('fill', 'none');
-      deleteSvg.innerHTML = `
-        <path d="M4 8.5H28" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M25.3332 8.5V27.1667C25.3332 28.5 23.9998 29.8333 22.6665 29.8333H9.33317C7.99984 29.8333 6.6665 28.5 6.6665 27.1667V8.5" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M10.6665 8.49996V5.83329C10.6665 4.49996 11.9998 3.16663 13.3332 3.16663H18.6665C19.9998 3.16663 21.3332 4.49996 21.3332 5.83329V8.49996" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13.3335 15.1667V23.1667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M18.6665 15.1667V23.1667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      `;
-      deleteSvg.addEventListener('click', () => onDeleteTask(index));
-      deleteContainer.appendChild(deleteSvg);
-      console.log('Created deleteContainer with deleteSvg');
-
-      taskControls.appendChild(editContainer);
-      taskControls.appendChild(deleteContainer);
-
-      taskElement.appendChild(taskTitleTags);
-      taskElement.appendChild(taskControls);
-
-      console.log('Task element fully created:', taskElement);
-      
-      return taskElement;
-    } catch (error) {
-      console.error('Error in renderTask:', error, 'Task data:', task);
-      throw error; // Re-throw to catch in the loop
+    // Validate task properties
+    if (!task.title || !task.status || !task.dueDate) {
+      throw new Error('Task is missing required properties (title, status, or dueDate)');
     }
+
+    const taskElement = document.createElement('div');
+    taskElement.className = `task ${task.status.toLowerCase().replace(' ', '-')}-task`;
+    console.log('Created task element with class:', taskElement.className);
+
+    const taskTitleTags = document.createElement('div');
+    taskTitleTags.className = 'task-title-tags';
+    console.log('Created taskTitleTags element');
+
+    // Define status-to-color mapping
+    const statusColors = {
+      'To Do': { stroke: '#487CA5', fill: '#E9F3F7' },
+      'In Progress': { stroke: '#C29343', fill: '#FAF3DD' },
+      'Completed': { stroke: '#548164', fill: '#EEF3ED' },
+      'Archived': { stroke: '#787774', fill: '#F1F1EF' }
+    };
+
+    const statusColor = statusColors[task.status] || statusColors['To Do'];
+    console.log('Status color for task:', statusColor);
+
+    const taskSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    taskSvg.id = 'status-task';
+    taskSvg.setAttribute('width', '32');
+    taskSvg.setAttribute('height', '32');
+    taskSvg.setAttribute('viewBox', '0 0 32 32');
+    taskSvg.setAttribute('fill', 'none');
+    taskSvg.innerHTML = `
+      <path d="M16.0001 29.3333C23.3639 29.3333 29.3334 23.3638 29.3334 16C29.3334 8.63616 23.3639 2.66663 16.0001 2.66663C8.63628 2.66663 2.66675 8.63616 2.66675 16C2.66675 23.3638 8.63628 29.3333 16.0001 29.3333Z" fill="${statusColor.fill}" stroke="${statusColor.stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    `;
+    console.log('Created taskSvg element');
+
+    const titleTags = document.createElement('div');
+    titleTags.className = 'title-tags';
+    console.log('Created titleTags element');
+
+    const taskTitle = document.createElement('p');
+    taskTitle.className = 'task-title';
+    taskTitle.textContent = task.title;
+    console.log('Created taskTitle element with text:', task.title);
+
+    const tags = document.createElement('div');
+    tags.className = 'tags';
+    console.log('Created tags element');
+
+    const statusTag = document.createElement('div');
+    statusTag.className = `status-tag ${task.status.toLowerCase().replace(' ', '-')}`;
+    statusTag.textContent = task.status;
+    console.log('Created statusTag element with class:', statusTag.className, 'text:', task.status);
+
+    const dueDate = document.createElement('p');
+    dueDate.className = 'due-date';
+    console.log('Formatting dueDate:', task.dueDate);
+    // Parse the dueDate string (YYYY-MM-DD) into a Date object
+    const [year, month, day] = task.dueDate.split('-');
+    const parsedDate = new Date(year, month - 1, day);
+    console.log('Parsed date:', parsedDate);
+    dueDate.innerHTML = task.status === 'Completed' || task.status === 'Archived'
+      ? `${task.status === 'Completed' ? 'Completed On' : 'Archived'}: <span class="date">${format(parsedDate, 'M/d/yyyy')}</span>`
+      : `Due Date: <span class="date">${format(parsedDate, 'M/d/yyyy')}</span>`;
+    console.log('Created dueDate element with HTML:', dueDate.innerHTML);
+
+    tags.appendChild(statusTag);
+    tags.appendChild(dueDate);
+    titleTags.appendChild(taskTitle);
+    titleTags.appendChild(tags);
+    taskTitleTags.appendChild(taskSvg);
+    taskTitleTags.appendChild(titleTags);
+
+    const taskControls = document.createElement('div');
+    taskControls.className = 'task-controls';
+    console.log('Created taskControls element');
+
+    const editContainer = document.createElement('div');
+    editContainer.className = 'svg-container';
+    const editSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    editSvg.classList.add('edit-task');
+    editSvg.setAttribute('width', '32');
+    editSvg.setAttribute('height', '33');
+    editSvg.setAttribute('viewBox', '0 0 32 33');
+    editSvg.setAttribute('fill', 'none');
+    editSvg.innerHTML = `
+      <path d="M28.2322 9.58265C28.9372 8.87788 29.3333 7.92194 29.3334 6.92512C29.3335 5.9283 28.9377 4.97226 28.2329 4.26731C27.5281 3.56237 26.5722 3.16626 25.5754 3.16614C24.5786 3.16601 23.6225 3.56188 22.9176 4.26665L5.1229 22.0653C4.81333 22.374 4.58439 22.754 4.45624 23.172L2.6949 28.9746C2.66045 29.09 2.65784 29.2124 2.68737 29.3291C2.7169 29.4458 2.77747 29.5523 2.86263 29.6373C2.9478 29.7223 3.0544 29.7827 3.17112 29.8121C3.28783 29.8414 3.41032 29.8386 3.52557 29.804L9.32957 28.044C9.74713 27.917 10.1271 27.6894 10.4362 27.3813L28.2322 9.58265Z" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M20 7.16669L25.3333 12.5" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    `;
+    editSvg.addEventListener('click', () => onEditTask(index));
+    editContainer.appendChild(editSvg);
+    console.log('Created editContainer with editSvg');
+
+    const deleteContainer = document.createElement('div');
+    deleteContainer.className = 'svg-container';
+    const deleteSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    deleteSvg.id = 'delete-task';
+    deleteSvg.setAttribute('width', '32');
+    deleteSvg.setAttribute('height', '33');
+    deleteSvg.setAttribute('viewBox', '0 0 32 33');
+    deleteSvg.setAttribute('fill', 'none');
+    deleteSvg.innerHTML = `
+      <path d="M4 8.5H28" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25.3332 8.5V27.1667C25.3332 28.5 23.9998 29.8333 22.6665 29.8333H9.33317C7.99984 29.8333 6.6665 28.5 6.6665 27.1667V8.5" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10.6665 8.49996V5.83329C10.6665 4.49996 11.9998 3.16663 13.3332 3.16663H18.6665C19.9998 3.16663 21.3332 4.49996 21.3332 5.83329V8.49996" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M13.3335 15.1667V23.1667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18.6665 15.1667V23.1667" stroke="#787774" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    `;
+    deleteSvg.addEventListener('click', () => onDeleteTask(index));
+    deleteContainer.appendChild(deleteSvg);
+    console.log('Created deleteContainer with deleteSvg');
+
+    taskControls.appendChild(editContainer);
+    taskControls.appendChild(deleteContainer);
+
+    taskElement.appendChild(taskTitleTags);
+    taskElement.appendChild(taskControls);
+
+    console.log('Task element fully created:', taskElement);
+    return taskElement;
   },
 };
 
