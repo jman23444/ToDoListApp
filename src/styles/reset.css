@@ -1,0 +1,87 @@
+/* Global CSS Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; 
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+body {
+  /* Reset font size to 16px (1.6rem) by default, adjust as needed */
+  font-size: 1.6rem;
+  line-height: 1.5; /* Readable default line height */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  color: #333; 
+  background-color: #fff; /* Default background */
+  -webkit-font-smoothing: antialiased; /* Smoother text rendering on Webkit browsers */
+  -moz-osx-font-smoothing: grayscale; /* Smoother text rendering on Firefox/macOS */
+}
+
+/* Remove list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Normalize links */
+a {
+  text-decoration: none;
+  color: inherit; /* Inherits parent color by default */
+}
+
+/* Reset images */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block; /* Removes extra space below images */
+  max-width: 100%; /* Ensures images don’t overflow containers */
+  height: auto; /* Maintains aspect ratio */
+}
+
+/* Reset form elements */
+button,
+input,
+select,
+textarea {
+  font-family: inherit; /* Inherits body font */
+  font-size: inherit; /* Inherits body font size */
+  line-height: inherit; /* Inherits body line height */
+  border: none; /* Removes default borders */
+  background: none; /* Removes default backgrounds */
+}
+
+/* Remove button default styles */
+button {
+  cursor: pointer; /* Ensures clickable feel */
+  appearance: none; /* Removes default OS styling */
+
+}
+
+/* Reset tables */
+table {
+  border-collapse: collapse; /* Removes spacing between cells */
+  border-spacing: 0;
+}
+
+/* Remove default outlines on focus, but keep accessibility */
+:focus {
+  outline: none;
+}
+
+/* Ensure hidden elements are truly hidden */
+[hidden] {
+  display: none !important;
+}
+
+/* Remove default fieldset styles */
+fieldset {
+  border: 0;
+}
