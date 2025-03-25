@@ -14,7 +14,10 @@ const dashboard = {
     header1.className = 'dashboard-header';
     const header1Group1 = document.createElement('div');
     header1Group1.className = 'nav-title-group';
-    const mobileMenuSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const mobileMenuSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     mobileMenuSvg.id = 'mobile-menu';
     mobileMenuSvg.setAttribute('width', '24');
     mobileMenuSvg.setAttribute('height', '24');
@@ -33,7 +36,10 @@ const dashboard = {
       document.getElementById('sidebar').style.display = 'block';
       document.getElementById('mobile-menu-overlay').style.display = 'block';
     });
-    const taskSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const taskSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     taskSvg.id = 'task-svg';
     taskSvg.setAttribute('width', '32');
     taskSvg.setAttribute('height', '32');
@@ -70,7 +76,10 @@ const dashboard = {
 
     const starContainer = document.createElement('div');
     starContainer.className = 'svg-container';
-    const starSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const starSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     starSvg.id = 'star-icon';
     starSvg.setAttribute('width', '32');
     starSvg.setAttribute('height', '32');
@@ -83,7 +92,10 @@ const dashboard = {
 
     const dotsContainer = document.createElement('div');
     dotsContainer.className = 'svg-container';
-    const dotsSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const dotsSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     dotsSvg.id = 'three-dots';
     dotsSvg.setAttribute('width', '32');
     dotsSvg.setAttribute('height', '32');
@@ -113,7 +125,10 @@ const dashboard = {
     iconHolder.className = 'icon-holder';
     const plusContainer = document.createElement('div');
     plusContainer.className = 'svg-container';
-    const plusSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const plusSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     plusSvg.setAttribute('width', '32');
     plusSvg.setAttribute('height', '32');
     plusSvg.setAttribute('viewBox', '0 0 32 32');
@@ -127,7 +142,10 @@ const dashboard = {
 
     const listContainer = document.createElement('div');
     listContainer.className = 'svg-container filter-container';
-    const listSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const listSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     listSvg.setAttribute('width', '32');
     listSvg.setAttribute('height', '32');
     listSvg.setAttribute('viewBox', '0 0 32 32');
@@ -144,8 +162,14 @@ const dashboard = {
     filterDropdown.className = 'filter-dropdown';
     filterDropdown.style.display = 'none'; // Hidden by default
 
-    const filterOptions = ['All', 'To Do', 'In Progress', 'Completed', 'Archived'];
-    filterOptions.forEach(option => {
+    const filterOptions = [
+      'All',
+      'To Do',
+      'In Progress',
+      'Completed',
+      'Archived',
+    ];
+    filterOptions.forEach((option) => {
       const filterItem = document.createElement('div');
       filterItem.className = 'filter-item';
       if (option === currentFilter) {
@@ -157,7 +181,9 @@ const dashboard = {
         console.log('Filter changed to:', currentFilter);
         filterDropdown.style.display = 'none'; // Hide dropdown after selection
         // Update selected state
-        filterDropdown.querySelectorAll('.filter-item').forEach(item => item.classList.remove('selected'));
+        filterDropdown
+          .querySelectorAll('.filter-item')
+          .forEach((item) => item.classList.remove('selected'));
         filterItem.classList.add('selected');
         renderTasks(); // Re-render tasks with the new filter
       });
@@ -207,17 +233,29 @@ const dashboard = {
           // Apply filter: show all tasks for "All" filter or match the task status
           if (currentFilter === 'All' || task.status === currentFilter) {
             try {
-              const taskElement = this.renderTask(task, index, onEditTask, onDeleteTask);
+              const taskElement = this.renderTask(
+                task,
+                index,
+                onEditTask,
+                onDeleteTask
+              );
               tasksContainer.appendChild(taskElement);
               const separator = document.createElement('div');
               separator.className = 'seperator';
               tasksContainer.appendChild(separator);
               console.log(`Task ${index} appended to tasksContainer`);
             } catch (error) {
-              console.error(`Error rendering task ${index}:`, error, 'Task data:', task);
+              console.error(
+                `Error rendering task ${index}:`,
+                error,
+                'Task data:',
+                task
+              );
             }
           } else {
-            console.log(`Skipping task ${index}: status ${task.status} does not match filter ${currentFilter}`);
+            console.log(
+              `Skipping task ${index}: status ${task.status} does not match filter ${currentFilter}`
+            );
           }
         });
       } else {
@@ -235,7 +273,9 @@ const dashboard = {
     console.log('Rendering task:', task);
     // Validate task properties
     if (!task.title || !task.status || !task.dueDate) {
-      throw new Error('Task is missing required properties (title, status, or dueDate)');
+      throw new Error(
+        'Task is missing required properties (title, status, or dueDate)'
+      );
     }
 
     const taskElement = document.createElement('div');
@@ -250,14 +290,17 @@ const dashboard = {
     const statusColors = {
       'To Do': { stroke: '#487CA5', fill: '#E9F3F7' },
       'In Progress': { stroke: '#C29343', fill: '#FAF3DD' },
-      'Completed': { stroke: '#548164', fill: '#EEF3ED' },
-      'Archived': { stroke: '#787774', fill: '#F1F1EF' }
+      Completed: { stroke: '#548164', fill: '#EEF3ED' },
+      Archived: { stroke: '#787774', fill: '#F1F1EF' },
     };
 
     const statusColor = statusColors[task.status] || statusColors['To Do'];
     console.log('Status color for task:', statusColor);
 
-    const taskSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const taskSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     taskSvg.id = 'status-task';
     taskSvg.setAttribute('width', '32');
     taskSvg.setAttribute('height', '32');
@@ -284,7 +327,12 @@ const dashboard = {
     const statusTag = document.createElement('div');
     statusTag.className = `status-tag ${task.status.toLowerCase().replace(' ', '-')}`;
     statusTag.textContent = task.status;
-    console.log('Created statusTag element with class:', statusTag.className, 'text:', task.status);
+    console.log(
+      'Created statusTag element with class:',
+      statusTag.className,
+      'text:',
+      task.status
+    );
 
     const dueDate = document.createElement('p');
     dueDate.className = 'due-date';
@@ -293,9 +341,10 @@ const dashboard = {
     const [year, month, day] = task.dueDate.split('-');
     const parsedDate = new Date(year, month - 1, day);
     console.log('Parsed date:', parsedDate);
-    dueDate.innerHTML = task.status === 'Completed' || task.status === 'Archived'
-      ? `${task.status === 'Completed' ? 'Completed On' : 'Archived'}: <span class="date">${format(parsedDate, 'M/d/yyyy')}</span>`
-      : `Due Date: <span class="date">${format(parsedDate, 'M/d/yyyy')}</span>`;
+    dueDate.innerHTML =
+      task.status === 'Completed' || task.status === 'Archived'
+        ? `${task.status === 'Completed' ? 'Completed On' : 'Archived'}: <span class="date">${format(parsedDate, 'M/d/yyyy')}</span>`
+        : `Due Date: <span class="date">${format(parsedDate, 'M/d/yyyy')}</span>`;
     console.log('Created dueDate element with HTML:', dueDate.innerHTML);
 
     tags.appendChild(statusTag);
@@ -311,7 +360,10 @@ const dashboard = {
 
     const editContainer = document.createElement('div');
     editContainer.className = 'svg-container';
-    const editSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const editSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     editSvg.classList.add('edit-task');
     editSvg.setAttribute('width', '32');
     editSvg.setAttribute('height', '33');
@@ -327,7 +379,10 @@ const dashboard = {
 
     const deleteContainer = document.createElement('div');
     deleteContainer.className = 'svg-container';
-    const deleteSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const deleteSvg = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'svg'
+    );
     deleteSvg.id = 'delete-task';
     deleteSvg.setAttribute('width', '32');
     deleteSvg.setAttribute('height', '33');

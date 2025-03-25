@@ -51,7 +51,14 @@ const taskModal = {
     modal.style.display = 'block';
     setTimeout(() => {
       modal.classList.add('show');
-      console.log('Modal opened: classList:', modal.classList.toString(), 'modal-content opacity:', window.getComputedStyle(modal.querySelector('.modal-content')).opacity, 'transform:', window.getComputedStyle(modal.querySelector('.modal-content')).transform);
+      console.log(
+        'Modal opened: classList:',
+        modal.classList.toString(),
+        'modal-content opacity:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).opacity,
+        'transform:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).transform
+      );
     }, 10);
 
     const form = modal.querySelector('#create-task-form');
@@ -59,10 +66,20 @@ const taskModal = {
     const modalContent = modal.querySelector('.modal-content');
 
     const closeModal = () => {
-      console.log('Before modal close: classList:', modal.classList.toString(), 'modal-content opacity:', window.getComputedStyle(modal.querySelector('.modal-content')).opacity, 'transform:', window.getComputedStyle(modal.querySelector('.modal-content')).transform);
+      console.log(
+        'Before modal close: classList:',
+        modal.classList.toString(),
+        'modal-content opacity:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).opacity,
+        'transform:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).transform
+      );
       modal.classList.add('reflow');
       modal.classList.remove('show');
-      console.log('After removing show: classList:', modal.classList.toString());
+      console.log(
+        'After removing show: classList:',
+        modal.classList.toString()
+      );
       setTimeout(() => {
         modal.remove();
         console.log('Modal closed and removed');
@@ -71,7 +88,8 @@ const taskModal = {
 
     // Close modal when clicking the background (but not the modal content)
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) { // Only close if the click is on the backdrop, not the modal content
+      if (e.target === modal) {
+        // Only close if the click is on the backdrop, not the modal content
         closeModal();
       }
     });
@@ -133,7 +151,14 @@ const taskModal = {
     modal.style.display = 'block';
     setTimeout(() => {
       modal.classList.add('show');
-      console.log('Modal opened: classList:', modal.classList.toString(), 'modal-content opacity:', window.getComputedStyle(modal.querySelector('.modal-content')).opacity, 'transform:', window.getComputedStyle(modal.querySelector('.modal-content')).transform);
+      console.log(
+        'Modal opened: classList:',
+        modal.classList.toString(),
+        'modal-content opacity:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).opacity,
+        'transform:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).transform
+      );
     }, 10);
 
     const deleteBtn = modal.querySelector('#delete-task-button');
@@ -142,10 +167,20 @@ const taskModal = {
     const modalContent = modal.querySelector('.modal-content');
 
     const closeModal = () => {
-      console.log('Before modal close: classList:', modal.classList.toString(), 'modal-content opacity:', window.getComputedStyle(modal.querySelector('.modal-content')).opacity, 'transform:', window.getComputedStyle(modal.querySelector('.modal-content')).transform);
+      console.log(
+        'Before modal close: classList:',
+        modal.classList.toString(),
+        'modal-content opacity:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).opacity,
+        'transform:',
+        window.getComputedStyle(modal.querySelector('.modal-content')).transform
+      );
       modal.classList.add('reflow');
       modal.classList.remove('show');
-      console.log('After removing show: classList:', modal.classList.toString());
+      console.log(
+        'After removing show: classList:',
+        modal.classList.toString()
+      );
       setTimeout(() => {
         modal.remove();
         console.log('Modal closed and removed');
@@ -154,7 +189,8 @@ const taskModal = {
 
     // Close modal when clicking the background (but not the modal content)
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) { // Only close if the click is on the backdrop, not the modal content
+      if (e.target === modal) {
+        // Only close if the click is on the backdrop, not the modal content
         closeModal();
       }
     });
