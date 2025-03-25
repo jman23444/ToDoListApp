@@ -1,8 +1,8 @@
 const createProject = (name) => {
-    return {
-      name,
-      tasks: [],
-    };
+  return {
+    name,
+    tasks: [],
   };
-  
-  export default createProject;
+};
+
+export default createProject;

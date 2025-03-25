@@ -55,7 +55,10 @@ const setupSidebarEventListeners = () => {
 
   // Function to close the sidebar
   function closeSidebar() {
-    console.log('Sidebar close button or overlay clicked, current isSidebarOpen:', isSidebarOpen);
+    console.log(
+      'Sidebar close button or overlay clicked, current isSidebarOpen:',
+      isSidebarOpen
+    );
     isSidebarOpen = false;
     isMobileToggled = false; // Reset mobile toggle state
     updateSidebarVisibility();
@@ -112,7 +115,12 @@ const setupSidebarEventListeners = () => {
         setTimeout(() => {
           sidebar.style.display = 'none';
           mobileMenuOverlay.style.display = 'none';
-          console.log('Slide-out complete: Sidebar classList:', sidebar.classList.toString(), 'transform:', window.getComputedStyle(sidebar).transform);
+          console.log(
+            'Slide-out complete: Sidebar classList:',
+            sidebar.classList.toString(),
+            'transform:',
+            window.getComputedStyle(sidebar).transform
+          );
         }, 300);
       }
     }
@@ -128,21 +136,32 @@ const setupSidebarEventListeners = () => {
 
 // Render function
 const render = (projectIndex) => {
-  dom.renderDashboard(appController.projects[projectIndex], 
+  dom.renderDashboard(
+    appController.projects[projectIndex],
     () => {
       // Create Task
       dom.showTaskModal(null, (taskData) => {
-        appController.addTaskToProject(projectIndex, taskData.title, taskData.description, taskData.dueDate, taskData.status);
+        appController.addTaskToProject(
+          projectIndex,
+          taskData.title,
+          taskData.description,
+          taskData.dueDate,
+          taskData.status
+        );
         render(projectIndex);
       });
     },
     (taskIndex) => {
       // Edit Task
       const task = appController.projects[projectIndex].tasks[taskIndex];
-      dom.showTaskModal(task, (taskData) => {
-        appController.editTask(projectIndex, taskIndex, taskData);
-        render(projectIndex);
-      }, true);
+      dom.showTaskModal(
+        task,
+        (taskData) => {
+          appController.editTask(projectIndex, taskIndex, taskData);
+          render(projectIndex);
+        },
+        true
+      );
     },
     (taskIndex) => {
       // Delete Task
@@ -163,7 +182,9 @@ const render = (projectIndex) => {
 };
 
 // Initial render
-dom.renderApp(appController.projects, render, 
+dom.renderApp(
+  appController.projects,
+  render,
   () => {
     // Create Task (initial placeholder)
   },
@@ -178,4 +199,4 @@ dom.renderApp(appController.projects, render,
 // Render the "To Do" project by default
 render(0);
 
-console.log("Hello, Webpack!");
+console.log('Hello, Webpack!');
